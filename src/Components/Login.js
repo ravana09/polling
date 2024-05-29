@@ -28,13 +28,22 @@ function Login() {
   });
 
   function handleInputChanges(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const number = /^\d*$/;
+
+    const { name, value } = e.target;
+
+    if (name === "PhoneNumber" && (number.test(value) || value === " ")) {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }else if(name==="Password"){
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
     setFormData({ PhoneNumber: "", Password: "" });
+    
   }
 
   return (
@@ -46,21 +55,20 @@ function Login() {
               <img className="LoginImages" src={LoginImg} alt="loginImage" />
             </Col>
 
-            <Formik
-              initialValues={formData}
-              validationSchema={schema}
-              enableReinitialize
-              onSubmit={handleSubmit}
-            >
-              {" "}
-              {({ handleSubmit }) => (
-                <Col xs={12} md={6}>
-                  <Card
-                    className="LoginCard mx-auto"
-                    style={{ maxWidth: "100%", height: "auto" }}
+            <Col xs={12} md={6}>
+              <Card
+                className="LoginCard mx-auto"
+                style={{ maxWidth: "100%", height: "auto" }}
+              >
+                <Card.Body>
+                  <Formik
+                    initialValues={formData}
+                    validationSchema={schema}
+                    enableReinitialize
+                    onSubmit={handleSubmit}
                   >
-                    <Card.Body>
-                      <Form onSubmit={handleSubmit}>
+                    {({ handleSubmit }) => (
+                      <Form onSubmit={handleSubmit} noValidate>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Mobile Number</Form.Label>
                           <Form.Control
@@ -71,6 +79,7 @@ function Login() {
                             value={formData.PhoneNumber}
                             onChange={handleInputChanges}
                           />
+                          <ErrorMessage name="PhoneNumber" className="text-danger" component="div" />
                         </Form.Group>
                         <Form.Group
                           className="mb-3"
@@ -85,6 +94,8 @@ function Login() {
                             value={formData.Password}
                             onChange={handleInputChanges}
                           />
+                           
+                            <ErrorMessage name="Password" className="text-danger" component="div" />
                         </Form.Group>
                         <center>
                           <Button
@@ -122,11 +133,11 @@ function Login() {
                           </p>
                         </div>
                       </Form>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              )}
-            </Formik>
+                    )}
+                  </Formik>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
         </Container>
       </div>
