@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import "./SignUp.css"; // Import your CSS file for styling
-import { Form, Button, Card, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import * as yup from "yup";
-import { Formik, ErrorMessage } from "formik";
-import signUpimg from "../Images/signupCard.jpg";
-import GoogleImg from "../Images/googleImg.png";
+import React, { useState } from "react"; //ract
+import "./SignUp.css"//css 
+import { Form, Button, Card, Col, Container, Row } from "react-bootstrap";//react bootstarp
+import { Link } from "react-router-dom";//router
+import * as yup from "yup";//form validation
+import { Formik, ErrorMessage } from "formik";//form validation
+import signUpimg from "../Images/signupCard.jpg";//sign up image 
+import GoogleImg from "../Images/googleImg.png";//google img
 
 function SignUp() {
-  const [showOtpInput, setShowOtpInput] = useState(false);
-  let [formData, setFormData] = useState({
+  const [showOtpInput, setShowOtpInput] = useState(false);//for otp
+  let [formData, setFormData] = useState({ 
     Name: "",
     Email: "",
     MobileNumber: "",
     Password: "",
-  });
+  });//for all inputs
 
+  //handlimg all inputs data parsing
   function handleChanges(e) {
     const number = /^\d*$/;
     const names = /^[a-zA-Z ]*$/;
@@ -31,6 +32,7 @@ function SignUp() {
   }
   }
 
+  //scheme for form validation of YUP
   const schema = yup.object().shape({
     Name: yup.string().required(),
     Email: yup
@@ -51,14 +53,18 @@ function SignUp() {
       .required("Password is required"),
   });
 
+
+  //Otp send Function
   function handleSendOTP() {
     setShowOtpInput(true);
   }
 
+  //Otp Function 
   function handleVerifyOTP(){
     setShowOtpInput(false);
   }
 
+//Submit Function 
   function handleSubmit(event) {
     event.preventDefault();
     setFormData({ Name: "", Email: "", MobileNumber: "", Password: "" });
@@ -78,7 +84,7 @@ function SignUp() {
                 style={{ maxWidth: "95%", height: "auto" || "95%" }}
               >
                 <Card.Body>
-                  <Formik
+                  <Formik //formik
                     initialValues={formData}
                     validationSchema={schema}
                     enableReinitialize
@@ -97,7 +103,7 @@ function SignUp() {
                             onChange={handleChanges}
                           />
                         </Form.Group>
-                        <ErrorMessage
+                        <ErrorMessage  //Error of form 
                           name="Name"
                           className="text-danger"
                           component="div"
