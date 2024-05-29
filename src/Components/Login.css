@@ -1,0 +1,34 @@
+
+.Body-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    
+    background: #142541;
+
+    
+  }
+
+  
+  .LoginImages {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .LoginCard {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0px 6px 20px 0px rgb(250, 247, 247);
+   
+  }
+  
+  .GoogleImg {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
