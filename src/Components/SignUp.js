@@ -55,6 +55,10 @@ function SignUp() {
     setShowOtpInput(true);
   }
 
+  function handleVerifyOTP(){
+    setShowOtpInput(false);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     setFormData({ Name: "", Email: "", MobileNumber: "", Password: "" });
@@ -145,13 +149,27 @@ function SignUp() {
                           </Form.Group>
                           {showOtpInput && (
                             <Form.Group className="mb-3" controlId="formOtp">
+                            <Row>
+                             
+                              
                               <Form.Label>Enter OTP</Form.Label>
+                              <Col sm={6}>
                               <Form.Control
                                 type="text"
                                 placeholder="Enter OTP"
                                 required
                               />
+                          
+                              </Col>
+                              <Col sm={6}>
+                              <Button onClick={handleVerifyOTP} variant="success">
+                                 Verify
+                                </Button>
+                              </Col>
+                          
+                            </Row>
                             </Form.Group>
+
                           )}
                         </Form.Group>
 
