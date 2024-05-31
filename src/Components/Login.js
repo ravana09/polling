@@ -8,7 +8,7 @@ import { Formik, ErrorMessage } from "formik";
 
 import LoginImg from "../Images/signUp.jpg";
 import GoogleImg from "../Images/googleImg.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -37,12 +37,17 @@ function Login() {
     }else if(name==="Password"){
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-  }
+  };
+
+  const navigate=useNavigate()
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
     setFormData({ PhoneNumber: "", Password: "" });
+    navigate("/home")
+
+    
     
   }
 
