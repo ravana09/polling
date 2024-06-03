@@ -1,20 +1,23 @@
 import React, { useState } from "react"; //ract
-import "./SignUp.css"//css 
-import { Form, Button, Card, Col, Container, Row } from "react-bootstrap";//react bootstarp
-import { Link } from "react-router-dom";//router
-import * as yup from "yup";//form validation
-import { Formik, ErrorMessage } from "formik";//form validation
-import signUpimg from "../Images/signupCard.jpg";//sign up image 
-import GoogleImg from "../Images/googleImg.png";//google img
+import "./SignUp.css"; //css
+import { Form, Button, Card, Col, Container, Row } from "react-bootstrap"; //react bootstarp
+import { Link } from "react-router-dom"; //router
+import * as yup from "yup"; //form validation
+import { Formik, ErrorMessage } from "formik"; //form validation
+import signUpimg from "../Images/signupCard.jpg"; //sign up image
+import GoogleImg from "../Images/googleImg.png"; //google img
 
 function SignUp() {
-  const [showOtpInput, setShowOtpInput] = useState(false);//for otp
-  let [formData, setFormData] = useState({ 
+  const [showOtpInput, setShowOtpInput] = useState(false); //for otp
+  let [formData, setFormData] = useState({
     Name: "",
     Email: "",
     MobileNumber: "",
     Password: "",
-  });//for all inputs
+  }); //for all inputs
+
+  //ahbdle All otp Button
+  let [verifyOtpButton, setVerifyOtpButton] = useState(false);
 
   //handlimg all inputs data parsing
   function handleChanges(e) {
@@ -29,7 +32,7 @@ function SignUp() {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     } else if (name === "Email" || name === "Password") {
       setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
+    }
   }
 
   //scheme for form validation of YUP
@@ -53,18 +56,18 @@ function SignUp() {
       .required("Password is required"),
   });
 
-
   //Otp send Function
-  function handleSendOTP() {
-    setShowOtpInput(true);
+  function handleSendOTP(event) {
+    if (event === false) {
+    }
   }
 
-  //Otp Function 
-  function handleVerifyOTP(){
+  //Otp Function
+  function handleVerifyOTP() {
     setShowOtpInput(false);
   }
 
-//Submit Function 
+  //Submit Function
   function handleSubmit(event) {
     event.preventDefault();
     setFormData({ Name: "", Email: "", MobileNumber: "", Password: "" });
@@ -103,21 +106,62 @@ function SignUp() {
                             onChange={handleChanges}
                           />
                         </Form.Group>
-                        <ErrorMessage  //Error of form 
+                        <ErrorMessage //Error of form
                           name="Name"
                           className="text-danger"
                           component="div"
                         />
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Email address</Form.Label>
-                          <Form.Control
-                            type="email"
-                            placeholder="Enter Your email"
-                            required
-                            name="Email"
-                            value={formData.Email}
-                            onChange={handleChanges}
-                          />
+                          <Form.Label>Enter Your Email </Form.Label>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicEmail"
+                          >
+                            <Row>
+                              <Col sm={9}>
+                                <Form.Control
+                                  type="text"
+                                  placeholder="Enter Your  email"
+                                  required
+                                  name="Email"
+                                  value={formData.MobileNumber}
+                                  onChange={handleChanges}
+                                />
+                                <ErrorMessage
+                                  name="Email"
+                                  className="text-danger"
+                                  component="div"
+                                />
+                              </Col>
+                              <Col sm={3}>
+                                <Button onClick={handleSendOTP(false)}>
+                                  Send OTP
+                                </Button>
+                              </Col>
+                            </Row>
+                          </Form.Group>
+                          {showOtpInput && (
+                            <Form.Group className="mb-3" controlId="formOtp">
+                              <Row>
+                                <Form.Label>Enter OTP</Form.Label>
+                                <Col sm={6}>
+                                  <Form.Control
+                                    type="text"
+                                    placeholder="Enter OTP"
+                                    required
+                                  />
+                                </Col>
+                                <Col sm={6}>
+                                  <Button
+                                    onClick={handleVerifyOTP}
+                                    variant="success"
+                                  >
+                                    Verify
+                                  </Button>
+                                </Col>
+                              </Row>
+                            </Form.Group>
+                          )}
                         </Form.Group>
                         <ErrorMessage
                           name="Email"
@@ -147,7 +191,7 @@ function SignUp() {
                                 />
                               </Col>
                               <Col sm={3}>
-                                <Button onClick={handleSendOTP}>
+                                <Button onClick={handleSendOTP(true)}>
                                   Send OTP
                                 </Button>
                               </Col>
@@ -155,27 +199,25 @@ function SignUp() {
                           </Form.Group>
                           {showOtpInput && (
                             <Form.Group className="mb-3" controlId="formOtp">
-                            <Row>
-                             
-                              
-                              <Form.Label>Enter OTP</Form.Label>
-                              <Col sm={6}>
-                              <Form.Control
-                                type="text"
-                                placeholder="Enter OTP"
-                                required
-                              />
-                          
-                              </Col>
-                              <Col sm={6}>
-                              <Button onClick={handleVerifyOTP} variant="success">
-                                 Verify
-                                </Button>
-                              </Col>
-                          
-                            </Row>
+                              <Row>
+                                <Form.Label>Enter OTP</Form.Label>
+                                <Col sm={6}>
+                                  <Form.Control
+                                    type="text"
+                                    placeholder="Enter OTP"
+                                    required
+                                  />
+                                </Col>
+                                <Col sm={6}>
+                                  <Button
+                                    onClick={handleVerifyOTP}
+                                    variant="success"
+                                  >
+                                    Verify
+                                  </Button>
+                                </Col>
+                              </Row>
                             </Form.Group>
-
                           )}
                         </Form.Group>
 
