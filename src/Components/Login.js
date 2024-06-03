@@ -43,7 +43,7 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+
     setFormData({ PhoneNumber: "", Password: "" });
     navigate("/home")
 
