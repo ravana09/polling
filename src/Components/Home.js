@@ -12,14 +12,13 @@ function Home() {
         style={{
           backgroundColor: "black",
           width: "100%",
-          height: 695,
+          height: "auto",
           color: "white",
         }}
       >
         <Container fluid>
           <Row>
-            <h3>Hello !! {localStorage.getItem("Phone Number ")}</h3>
-            <hr />
+            
             <Col md={3}>
               <Navbar />
      
