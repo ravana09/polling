@@ -10,6 +10,8 @@ import LoginImg from "../Images/signUp.jpg";
 import GoogleImg from "../Images/googleImg.png";
 import { Link, useNavigate } from "react-router-dom";
 
+
+
 function Login() {
   const [formData, setFormData] = useState({
     PhoneNumber: "",
@@ -34,21 +36,21 @@ function Login() {
 
     if (name === "PhoneNumber" && (number.test(value) || value === " ")) {
       setFormData({ ...formData, [e.target.name]: e.target.value });
-    }else if(name==="Password"){
+    } else if (name === "Password") {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-  };
+  }
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   function handleSubmit(event) {
-    event.preventDefault();
+  //  event.preventDefault();
 
     setFormData({ PhoneNumber: "", Password: "" });
-    navigate("/home")
-
-    
-    
+    console.log(formData.PhoneNumber)
+    localStorage.setItem("Phone Number ",formData.PhoneNumber)
+    navigate("/home");
+   
   }
 
   return (
@@ -84,7 +86,11 @@ function Login() {
                             value={formData.PhoneNumber}
                             onChange={handleInputChanges}
                           />
-                          <ErrorMessage name="PhoneNumber" className="text-danger" component="div" />
+                          <ErrorMessage
+                            name="PhoneNumber"
+                            className="text-danger"
+                            component="div"
+                          />
                         </Form.Group>
                         <Form.Group
                           className="mb-3"
@@ -99,8 +105,12 @@ function Login() {
                             value={formData.Password}
                             onChange={handleInputChanges}
                           />
-                           
-                            <ErrorMessage name="Password" className="text-danger" component="div" />
+
+                          <ErrorMessage
+                            name="Password"
+                            className="text-danger"
+                            component="div"
+                          />
                         </Form.Group>
                         <center>
                           <Button

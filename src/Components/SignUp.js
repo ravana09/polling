@@ -1,285 +1,239 @@
-import React, { useState } from "react"; //ract
-import "./SignUp.css"; //css
-import { Form, Button, Card, Col, Container, Row } from "react-bootstrap"; //react bootstarp
-import { Link } from "react-router-dom"; //router
-import * as yup from "yup"; //form validation
-import { Formik, ErrorMessage } from "formik"; //form validation
-import signUpimg from "../Images/signupCard.jpg"; //sign up image
-import GoogleImg from "../Images/googleImg.png"; //google img
+import React, { useState } from "react";
+import "./SignUp.css";
+import { Form, Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import * as yup from "yup";
+import { Formik, ErrorMessage } from "formik";
+import signUpimg from "../Images/signupCard.jpg";
+import GoogleImg from "../Images/googleImg.png";
 
 function SignUp() {
-  const [showOtpInput, setShowOtpInput] = useState(false); //for otp
-  let [formData, setFormData] = useState({
+  const [showOtpInput, setShowOtpInput] = useState(false);
+
+  const schema = yup.object().shape({
+    Name: yup.string().required("Name is required"),
+    Email: yup
+      .string()
+      .matches(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]{2,6}$/, "Enter a valid email")
+      .required("Email is required"),
+    MobileNumber: yup
+      .string()
+      .matches(/^\d{10}$/, "Enter a valid 10 digit mobile number")
+      .required("Mobile Number is required"),
+    Password: yup
+      .string()
+      .matches(/^[\w\d\W]{8}$/, "Password must be exactly 8 characters")
+      .required("Password is required"),
+  });
+
+  const initialValues = {
     Name: "",
     Email: "",
     MobileNumber: "",
     Password: "",
-  }); //for all inputs
+  };
 
-  //ahbdle All otp Button
-  let [verifyOtpButton, setVerifyOtpButton] = useState(false);
+  const handleSendOTP = () => {
+    setShowOtpInput(true);
+  };
 
-  //handlimg all inputs data parsing
-  function handleChanges(e) {
-    const number = /^\d*$/;
-    const names = /^[a-zA-Z ]*$/;
-
-    const { name, value } = e.target;
-
-    if (name === "MobileNumber" && (number.test(value) || value === " ")) {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    } else if (name === "Name" && (names.test(value) || value === " ")) {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    } else if (name === "Email" || name === "Password") {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
-  }
-
-  //scheme for form validation of YUP
-  const schema = yup.object().shape({
-    Name: yup.string().required(),
-    Email: yup
-      .string()
-      .matches(
-        /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,6}$/,
-        "Enter a Valid Email"
-      )
-      .required(),
-
-    MobileNumber: yup
-      .string()
-      .matches(/^\d{10}$/, "Enter only 10 digits")
-      .required(),
-    Password: yup
-      .string()
-      .matches(/^[\w\d\W]{8}$/, "Enter only 8 digits")
-      .required("Password is required"),
-  });
-
-  //Otp send Function
-  function handleSendOTP(event) {
-    if (event === false) {
-    }
-  }
-
-  //Otp Function
-  function handleVerifyOTP() {
+  const handleVerifyOTP = () => {
     setShowOtpInput(false);
-  }
+  };
 
-  //Submit Function
-  function handleSubmit(event) {
-    event.preventDefault();
-    setFormData({ Name: "", Email: "", MobileNumber: "", Password: "" });
-  }
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    actions.resetForm();
+  };
+
   return (
-    <>
-      <div className="Body-container">
-        <Container>
-          <Row className="justify-content-center align-items-center">
-            <Col xs={12} md={6} className="d-flex justify-content-center mb-3">
-              <img className="LoginImages" src={signUpimg} alt="loginImage" />
-            </Col>
-
-            <Col xs={12} md={6}>
-              <Card
-                className="LoginCard mx-auto"
-                style={{ maxWidth: "95%", height: "auto" || "95%" }}
-              >
-                <Card.Body>
-                  <Formik //formik
-                    initialValues={formData}
-                    validationSchema={schema}
-                    enableReinitialize
-                    onSubmit={handleSubmit}
-                  >
-                    {({ handleSubmit }) => (
-                      <Form onSubmit={handleSubmit} noValidate>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Name</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter Your Name"
-                            required
-                            name="Name"
-                            value={formData.Name}
-                            onChange={handleChanges}
-                          />
-                        </Form.Group>
-                        <ErrorMessage //Error of form
+    <div className="Body-container">
+      <Container>
+        <Row className="justify-content-center align-items-center">
+          <Col xs={12} md={6} className="d-flex justify-content-center mb-3">
+            <img className="LoginImages" src={signUpimg} alt="signupImage" />
+          </Col>
+          <Col xs={12} md={6}>
+            <Card
+              className="LoginCard mx-auto"
+              style={{ maxWidth: "95%", height: "auto" }}
+            >
+              <Card.Body>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={schema}
+                  onSubmit={handleSubmit}
+                >
+                  {({
+                    handleSubmit,
+                    handleChange,
+                    handleBlur,
+                    values,
+                    touched,
+                    errors,
+                  }) => (
+                    <Form noValidate onSubmit={handleSubmit}>
+                      <Form.Group className="mb-3" controlId="formName">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter Your Name"
                           name="Name"
-                          className="text-danger"
-                          component="div"
+                          value={values.Name}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          isInvalid={touched.Name && !!errors.Name}
                         />
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Enter Your Email </Form.Label>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicEmail"
-                          >
-                            <Row>
-                              <Col sm={9}>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Enter Your  email"
-                                  required
-                                  name="Email"
-                                  value={formData.MobileNumber}
-                                  onChange={handleChanges}
-                                />
-                                <ErrorMessage
-                                  name="Email"
-                                  className="text-danger"
-                                  component="div"
-                                />
-                              </Col>
-                              <Col sm={3}>
-                                <Button onClick={handleSendOTP(false)}>
-                                  Send OTP
-                                </Button>
-                              </Col>
-                            </Row>
-                          </Form.Group>
-                          {showOtpInput && (
-                            <Form.Group className="mb-3" controlId="formOtp">
-                              <Row>
-                                <Form.Label>Enter OTP</Form.Label>
-                                <Col sm={6}>
-                                  <Form.Control
-                                    type="text"
-                                    placeholder="Enter OTP"
-                                    required
-                                  />
-                                </Col>
-                                <Col sm={6}>
-                                  <Button
-                                    onClick={handleVerifyOTP}
-                                    variant="success"
-                                  >
-                                    Verify
-                                  </Button>
-                                </Col>
-                              </Row>
-                            </Form.Group>
-                          )}
-                        </Form.Group>
-                        <ErrorMessage
-                          name="Email"
-                          className="text-danger"
-                          component="div"
-                        />
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Mobile Number </Form.Label>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicEmail"
-                          >
-                            <Row>
-                              <Col sm={9}>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Enter Your  Mobile Number"
-                                  required
-                                  name="MobileNumber"
-                                  value={formData.MobileNumber}
-                                  onChange={handleChanges}
-                                />
-                                <ErrorMessage
-                                  name="MobileNumber"
-                                  className="text-danger"
-                                  component="div"
-                                />
-                              </Col>
-                              <Col sm={3}>
-                                <Button onClick={handleSendOTP(true)}>
-                                  Send OTP
-                                </Button>
-                              </Col>
-                            </Row>
-                          </Form.Group>
-                          {showOtpInput && (
-                            <Form.Group className="mb-3" controlId="formOtp">
-                              <Row>
-                                <Form.Label>Enter OTP</Form.Label>
-                                <Col sm={6}>
-                                  <Form.Control
-                                    type="text"
-                                    placeholder="Enter OTP"
-                                    required
-                                  />
-                                </Col>
-                                <Col sm={6}>
-                                  <Button
-                                    onClick={handleVerifyOTP}
-                                    variant="success"
-                                  >
-                                    Verify
-                                  </Button>
-                                </Col>
-                              </Row>
-                            </Form.Group>
-                          )}
-                        </Form.Group>
+                        <Form.Control.Feedback type="invalid">
+                          {errors.Name}
+                        </Form.Control.Feedback>
+                      </Form.Group>
 
-                        <Form.Group
-                          className="mb-3"
-                          controlId="formBasicPassword"
+                      <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Row>
+                          <Col sm={9}>
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Your Email"
+                              name="Email"
+                              value={values.Email}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              isInvalid={touched.Email && !!errors.Email}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.Email}
+                            </Form.Control.Feedback>
+                          </Col>
+                          <Col sm={3}>
+                            <Button type="button" onClick={handleSendOTP}>
+                              Send OTP
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Form.Group>
+
+                      {showOtpInput && (
+                        <Form.Group className="mb-3" controlId="formOtp">
+                          <Row>
+                            <Form.Label>Enter OTP</Form.Label>
+                            <Col sm={6}>
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter OTP"
+                                required
+                              />
+                            </Col>
+                            <Col sm={6}>
+                              <Button
+                                onClick={handleVerifyOTP}
+                                variant="success"
+                              >
+                                Verify
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form.Group>
+                      )}
+
+                      <Form.Group className="mb-3" controlId="formMobileNumber">
+                        <Form.Label>Mobile Number</Form.Label>
+                        <Row>
+                          <Col sm={9}>
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Your Mobile Number"
+                              name="MobileNumber"
+                              value={values.MobileNumber}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              isInvalid={touched.MobileNumber && !!errors.MobileNumber}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.MobileNumber}
+                            </Form.Control.Feedback>
+                          </Col>
+                          <Col sm={3}>
+                            <Button type="button" onClick={handleSendOTP}>
+                              Send OTP
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Form.Group>
+                      {showOtpInput && (
+                        <Form.Group className="mb-3" controlId="formOtp">
+                          <Row>
+                            <Form.Label>Enter OTP</Form.Label>
+                            <Col sm={6}>
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter OTP"
+                                required
+                              />
+                            </Col>
+                            <Col sm={6}>
+                              <Button
+                                onClick={handleVerifyOTP}
+                                variant="success"
+                              >
+                                Verify
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form.Group>
+                      )}
+
+                      <Form.Group className="mb-3" controlId="formPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="Enter Your Password"
+                          name="Password"
+                          value={values.Password}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          isInvalid={touched.Password && !!errors.Password}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.Password}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+
+                      <center>
+                        <Button variant="primary" type="submit" className="w-50">
+                          Sign Up
+                        </Button>
+                      </center>
+                      <hr />
+                      <div className="OtherLogin">
+                        <Button
+                          variant="light"
+                          className="w-100 mb-2 d-flex align-items-center justify-content-center"
+                          style={{ height: "60px" }}
                         >
-                          <Form.Label>Password</Form.Label>
-                          <Form.Control
-                            type="password"
-                            placeholder="Enter Your Password"
-                            required
-                            name="Password"
-                            value={formData.Password}
-                            onChange={handleChanges}
+                          <img
+                            src={GoogleImg}
+                            alt="googleImage"
+                            className="GoogleImg"
                           />
-                          <ErrorMessage
-                            name="Password"
-                            className="text-danger"
-                            component="div"
-                          />
-                        </Form.Group>
-                        <center>
-                          <Button
-                            variant="primary"
-                            type="submit"
-                            className="w-50 "
-                          >
-                            Sign Up
-                          </Button>
-                        </center>
-                        <hr />
-
-                        <div className="OtherLogin">
-                          <Button
-                            variant="light"
-                            className="w-100 mb-2 d-flex align-items-center justify-content-center"
-                            style={{ height: "60px" }}
-                          >
-                            <img
-                              src={GoogleImg}
-                              alt="googleImage"
-                              className="GoogleImg"
-                            ></img>
-                            CONTINUE WITH GOOGLE
-                          </Button>
-                        </div>
-                        <div>
-                          <p className="text-center">
-                            Already have an account? <Link to="/">Sign In</Link>{" "}
-                          </p>
-                        </div>
-                      </Form>
-                    )}
-                  </Formik>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    </>
+                          CONTINUE WITH GOOGLE
+                        </Button>
+                      </div>
+                      <div>
+                        <p className="text-center">
+                          Already have an account? <Link to="/">Sign In</Link>
+                        </p>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 

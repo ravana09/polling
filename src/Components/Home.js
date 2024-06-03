@@ -8,22 +8,33 @@ import Navbar from "./Navbar";
 function Home() {
   return (
     <>
-      <div style={{backgroundColor:"black",width:"100%" ,height:695,color:"white"}}>
+      <div
+        style={{
+          backgroundColor: "black",
+          width: "100%",
+          height: 695,
+          color: "white",
+        }}
+      >
         <Container fluid>
           <Row>
-            <Col md={3} >
+            <h3>Hello !! {localStorage.getItem("Phone Number ")}</h3>
+            <hr />
+            <Col md={3}>
               <Navbar />
+     
             </Col>
             <Col md={6}>
               <Polling />
             </Col>
-           <Col md={3}></Col>
+            <Col md={3}></Col>
           </Row>
+         
         </Container>
+        
       </div>
     </>
   );
 }
 
 export default Home;
-
