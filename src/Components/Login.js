@@ -34,9 +34,9 @@ function Login() {
 
     const { name, value } = e.target;
 
-    if (name === "PhoneNumber" && (number.test(value) || value === " ")) {
+    if (name === "PhoneNumber" && (number.test(value) || value === " ")&& value.length <= 10) {
       setFormData({ ...formData, [e.target.name]: e.target.value });
-    } else if (name === "Password") {
+    } else if ((name === "Password")&& value.length <= 8) {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   }
@@ -51,6 +51,10 @@ function Login() {
     localStorage.setItem("Phone Number ",formData.PhoneNumber)
     navigate("/home");
    
+  }
+
+  function handleForgetPassword(){
+
   }
 
   return (
@@ -85,6 +89,7 @@ function Login() {
                             name="PhoneNumber"
                             value={formData.PhoneNumber}
                             onChange={handleInputChanges}
+                           
                           />
                           <ErrorMessage
                             name="PhoneNumber"
@@ -122,24 +127,27 @@ function Login() {
                           </Button>
                         </center>
                         <hr />
-                        {/* <center>
+                        <center>
                       {" "}
-                      <a href="">Forget Password </a> <p>OR</p>
-                    </center> */}
+                      <a href='' target="blank">Forget Password </a> 
+                      <p>OR</p>
+                    </center>
 
                         <div className="OtherLogin">
+                          <center>
                           <Button
                             variant="light"
-                            className="w-100 mb-2 d-flex align-items-center justify-content-center"
-                            style={{ height: "60px" }}
+                            className="  Google-Column"
+                            style={{ height: "40px" }}
                           >
                             <img
                               src={GoogleImg}
                               alt="Google img"
-                              className="GoogleImg me-2"
+                              className="GoogleImg "
                             />
                             CONTINUE WITH GOOGLE
                           </Button>
+                          </center>
                         </div>
                         <div>
                           <p className="text-center">

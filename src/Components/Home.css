@@ -45,6 +45,9 @@
     width: calc(100% - 220px);
 }
 
+.polling{
+    margin-top: 30px;
+}
 
 /* NavBar.css */
 .navbar-toggle-custom {
@@ -55,17 +58,50 @@
   .navbar-toggle-custom .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   }
-/* 
+
+  #Mobile_view{
+    display: none;
+  }
+
   .signOut{
-    
-    display: flex;
-    justify-content: flex-end;
-    align-items: end;
-    
-  } */
+    position: relative;
+    top: 300px;
+  }
+
+  .navBar-cointaine{
+    background-color: #a33030;
+    height:100vh;
+    font-size:"larger";
+    border:'1px solid grey'
+  }
+
+  @media only screen and (max-width:1220px){
+    .sidebar {
+        width: 200px;
+        background-color: #070707;
+        color: white;
+        padding:10px; 
+        height: 0px;
+        position: fixed;
+      
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #575757;
+    }
+    /* .container{
+        background-color: #353333;
+        padding-right: 30px;
+        width: 200px;
+        height:100vh;
+        font-size:"larger";
+        border:'1px solid grey'
+    } */
+
+  }
   
 
-@media only screen and (max-width:365px){
+@media only screen and (max-width:770px){
     .sidebar {
         width: 0px;
         background-color: #a08734;
@@ -75,6 +111,22 @@
         position: fixed;
       
     }
+    #desktop_view{
+        display: none;
+    }
+
+    #Mobile_view{
+        display: contents;
+      }
+
+      .navbar-toggle-custom {
+        background-color: black;
+        border: none;
+      }
+      
+      .navbar-toggle-custom .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      }
     .polling{
         margin-top:40px;
 

@@ -6,7 +6,8 @@
     justify-content: center;
     padding: 20px;
     
-    background: #142541;
+    /* background: black; */
+    background-color: cadetblue;
 
     
   }
@@ -19,16 +20,28 @@
   }
   
   .LoginCard {
+    /* background-color: rgb(8, 8, 8); */
+    background-color: cadetblue;
+    color: white;
     width: 100%;
     max-width: 500px;
     padding: 20px;
-    box-shadow: 0px 6px 20px 0px rgb(250, 247, 247);
+    box-shadow: 0px 6px 20px 0px rgb(60, 59, 59);
    
   }
   
   .GoogleImg {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 40px;
     margin-right: 10px;
+  }
+
+  .Google-Column{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 20px;
+   width: 350px;
+   padding: 10px;
   }
   

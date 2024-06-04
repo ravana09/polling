@@ -31,7 +31,7 @@ function RangeOutput() {
               }}
             >
               <Card.Body>
-                <Card.Title>Vote Results</Card.Title>
+                <Card.Title> Results</Card.Title>
                 <Card
                   style={{
                     width: "100%",

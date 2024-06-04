@@ -6,6 +6,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import RangeOutput from "./RangeOutput";
+import Swal from "sweetalert2";
+
 
 // Define the NavBar component
 function NavBar() {
@@ -36,7 +38,26 @@ function NavBar() {
    
     localStorage.removeItem("Phone Number");
     localStorage.removeItem("Phone Number ");
-    navigate("/login"); // Redirect to login page after sign-out
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "error",
+      title: "Log out  successfully"
+      
+    });
+    setTimeout(()=>{
+      navigate('/');
+    },1000)
+    
   }
 
   // Return JSX for NavBar component
@@ -44,19 +65,19 @@ function NavBar() {
     <>
       <Col>
         <div className="sidebar">
-          <Container>
-            <Navbar expand="lg" className="p-0">
+          <Container className="navBar-cointainer">
+            <Navbar id="desktop_view" expand="lg" className="p-0">
               <Row className="w-100 m-0">
                 <Col md={12} sm={12} className="p-0">
-                  <Navbar.Toggle
+                  {/* <Navbar.Toggle
                     aria-controls="basic-navbar-nav"
                     className={`navbar-toggle-custom ${
                       show ? "navbar-toggler" : ""
                     }`}
                     onClick={handleShow}
-                  />
+                  /> */}
 
-                  <Navbar.Collapse id="basic-navbar-nav">
+                  {/* <Navbar.Collapse id="basic-navbar-nav"> */}
                     <Nav defaultActiveKey="/home" className="flex-column">
                       <Nav.Link
                         onClick={() => handleClick("/home")}
@@ -93,21 +114,74 @@ function NavBar() {
                       {/* Sign-out button */}
                       <Nav.Link
                         onClick={handleSignOut}
-                        style={{ color: "white" }}
-                        className="d-flex align-items-end"
+                        style={{ color: "white",
+                          
+                         }}
+                        className="d-flex align-items-end m-10 signOut "
                       >
                         Sign Out
                       </Nav.Link>
                     </Nav>
-                  </Navbar.Collapse>
+                  {/* </Navbar.Collapse> */}
                 </Col>
               </Row>
             </Navbar>
           </Container>
         </div>
 
-        {/* Offcanvas menu */}
-        <Offcanvas
+        <Navbar expand="lg" id="Mobile_view" className="bg-body-tertiary" >
+      <Container style={{color:"white"}} >
+        {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+     
+        <Navbar.Toggle aria-controls="basic-navbar-nav" 
+        className={`navbar-toggle-custom ${
+          show ? "navbar-toggler" : ""
+        }`}
+        
+        />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto"  >
+          <Nav.Link
+                        onClick={() => handleClick("/home")}
+                        style={{ color: "white",paddingLeft:20 }}
+                      >
+                        Home
+                      </Nav.Link>
+                      <Nav.Link
+                        onClick={() => handleClick("/Polling")}
+                        style={{ color: "white",paddingLeft:20 }}
+                      >
+                        Services
+                      </Nav.Link>
+                      <Nav.Link
+                        onClick={() => handleClick("/home")}
+                        style={{ color: "white",paddingLeft:20 }}
+                      >
+                        Clients
+                      </Nav.Link>
+                      <Nav.Link
+                        onClick={() => handleClick("/home")}
+                        style={{ color: "white",paddingLeft:20 }}
+                      >
+                        Contact
+                      </Nav.Link>
+                      {/* Sign-out button */}
+                      <Nav.Link
+                        onClick={handleSignOut}
+                        style={{ color: "white",paddingLeft:20 }}
+                        className="d-flex align-items-end"
+                      >
+                        Sign Out
+                      </Nav.Link>
+         
+          </Nav>
+        </Navbar.Collapse>
+        
+      </Container>
+    </Navbar>
+
+      
+        {/* <Offcanvas
           show={show}
           onHide={handleClose}
           placement="start"
@@ -142,7 +216,7 @@ function NavBar() {
               >
                 Contact
               </Nav.Link>
-              {/* Sign-out button */}
+             
               <Nav.Link
                 onClick={handleSignOut}
                 style={{ color: "white" }}
@@ -153,7 +227,7 @@ function NavBar() {
             </Nav>
           </Offcanvas.Body>
         </Offcanvas>
-        <footer></footer>
+        <footer></footer> */}
       </Col>
     </>
   );

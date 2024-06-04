@@ -12,7 +12,7 @@ function Home() {
         style={{
           backgroundColor: "black",
           width: "100%",
-          height: "auto",
+          height: "100vh",
           color: "white",
         }}
       >
@@ -26,7 +26,9 @@ function Home() {
             <Col md={6}>
               <Polling />
             </Col>
-            <Col md={3}></Col>
+            <Col md={3}>
+            <Navbar />
+            </Col>
           </Row>
          
         </Container>
